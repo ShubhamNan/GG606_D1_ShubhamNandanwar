@@ -1,0 +1,32 @@
+{
+    "id": "78546D22",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1614399774526.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "expression": "pollution_df",
+        "caption": "pollution_df",
+        "totalObservations": "1746661",
+        "displayedObservations": "1746661",
+        "variables": "29",
+        "cacheKey": "D7FE8A0E",
+        "object": "pollution_df",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=pollution_df&cache_key=D7FE8A0E&max_cols=50",
+        "preview": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 7954801838394599012,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1614399774526,
+    "read_only": false,
+    "read_only_alternatives": []
+}
