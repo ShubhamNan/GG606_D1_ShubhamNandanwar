@@ -1,0 +1,17 @@
+/* DATA DESCRIPTION:
+Citation:	Antico, Andrés; Aguiar, Ricardo O; Amsler, Mario L (2017): Paraná River hydrometric data from Rosario City, Argentina: 1875 to 2017. PANGAEA, https://doi.org/10.1594/PANGAEA.882613, 
+	Supplement to: Antico, A et al. (2018): Hydrometric data rescue in the Paraná River Basin. Water Resources Research, 54, 1368-1381, https://doi.org/10.1002/2017WR020897
+Abstract:	Here we provide the data set obtained as described in detail in Antico et al. (2018, doi:10.1002/2017WR020897); a brief description is presented below. 
+	We imaged and digitized paper format official national data of daily Paraná water level observations taken at Rosario City, Argentina, from January 1875 to July 2017. Quality checks were applied to the digitized official daily levels in order to flag suspicious values. A corrected version of the official level data was obtained by eliminating the errors caused by gauge sinkings that may have occurred from 1875 to 1908. A rating curve was obtained for Rosario and it was used to convert official and corrected levels into official and corrected discharges, respectively. The water level and discharge data provided here constitute the longest (last 143 years) continuous hydrometric records of the Paraná River, one of the ten largest rivers in the world.
+Related to:	Antico, Andrés; Mendizabal, Sophie; Ferreira, Lorena J; Aguiar, Ricardo O; Amsler, Mario L (2019): Improved Paraná River hydrometric data from 1875 to 1883. PANGAEA, https://doi.org/10.1594/PANGAEA.906056
+Coverage:	LATITUDE: -32.933630 * LONGITUDE: -60.643550
+	DATE/TIME START: 1875-01-01T00:00:00 * DATE/TIME END: 2017-07-31T00:00:00
+Event(s):	Paraná_River_Rosario * LATITUDE: -32.933630 * LONGITUDE: -60.643550 * LOCATION: Rosario City, Argentina, South America * METHOD/DEVICE: Hydrographic station (HYD)
+Comment:	For 1875-1883, we recommend to replace the hydrometric data of this dataset by those available at: https://doi.pangaea.de/10.1594/PANGAEA.906056
+License:	Creative Commons Attribution 3.0 Unported (CC-BY-3.0)
+Size:	2 datasets
+*/
+/* TABULAR SUMMARY OF DATASETS LISTED IN THIS COLLECTION: */
+Filename	Citation of child dataset
+Parana_Rosario_daily.tab	Antico, Andrés; Aguiar, Ricardo O; Amsler, Mario L (2017): Paraná River daily hydrometric data from Rosario City, Argentina: 1875 to 2017. https://doi.org/10.1594/PANGAEA.882611
+Parana_Rosario_monthly.tab	Antico, Andrés; Aguiar, Ricardo O; Amsler, Mario L (2017): Paraná River monthly hydrometric data from Rosario City, Argentina: 1875 to 2017. https://doi.org/10.1594/PANGAEA.882612
