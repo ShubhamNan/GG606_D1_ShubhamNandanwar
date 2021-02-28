@@ -32,67 +32,6 @@ path <- paste(mainDir,CleanDir,sep = "",collapse = NULL)
 # Calling multimerge function and storing data in DF 
 DF <- multmerge(path)
 
-p <- DF %>%
-  ggplot( aes(x=Month_Yr, y=`NO2 Mean`)) +
-  geom_area(fill="#69b3a2", alpha=0.5) +
-  geom_line(color="#69b3a2") +
-  ylab("NO2 Mean(Parts ber Billions)") +
-  theme_ipsum()
-
-# Turn it interactive with ggplotly
-p <- ggplotly(p)
-p
-
-Results="Results"
-Results_all = "Results/All_States"
-dir.create(file.path(mainDir, Results), showWarnings = FALSE)
-dir.create(file.path(mainDir, Results_all), showWarnings = FALSE)
-# Multiple of all states line plot
-p<-ggplot(DF, aes(x = Month_Yr, y =`NO2 Mean`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-
-
-ggsave(
-  paste(mainDir,Results_all,"/All_State_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-p<-ggplot(DF, aes(x = Month_Yr, y =`CO Mean`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-
-
-ggsave(
-  paste(mainDir,Results_all,"/All_State_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-p<-ggplot(DF, aes(x = Month_Yr, y =`SO2 Mean`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-
-
-ggsave(
-  paste(mainDir,Results_all,"/All_State_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-p<-ggplot(DF, aes(x = Month_Yr, y =`O3 Mean`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-
-
-ggsave(
-  paste(mainDir,Results_all,"/All_State_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-
-
-
-
 DF <- DF %>% 
   rename(
     "NO2 Mean (Parts per Million)" = "NO2 Mean",
@@ -132,7 +71,6 @@ dir.create(file.path(mainDir, Results_NewEngland), showWarnings = FALSE)
 p<-ggplot(NewEngland_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
   geom_line(aes(color = State)) +
   theme_minimal()
-
 ggsave(
   paste(mainDir,Results_NewEngland,"/NewEngland_NO2_main_plot.png",sep=""),
   plot = p,device = "png")
@@ -141,7 +79,6 @@ ggsave(
 p<-ggplot(NewEngland_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
   geom_line(aes(color = State)) +
   theme_minimal()
-
 ggsave(
   paste(mainDir,Results_NewEngland,"/NewEngland_O3_main_plot.png",sep=""),
   plot = p,device = "png")
@@ -149,7 +86,6 @@ ggsave(
 p<-ggplot(NewEngland_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
   geom_line(aes(color = State)) +
   theme_minimal()
-
 ggsave(
   paste(mainDir,Results_NewEngland,"/NewEngland_SO2_main_plot.png",sep=""),
   plot = p,device = "png")
