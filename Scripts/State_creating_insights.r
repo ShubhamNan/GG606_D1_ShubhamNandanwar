@@ -29,6 +29,7 @@ multmerge = function(path){
 
 # folder path where all the raw data exists
 path <- paste(mainDir,CleanDir,sep = "",collapse = NULL)
+
 # Calling multimerge function and storing data in DF 
 DF <- multmerge(path)
 

@@ -13,6 +13,7 @@ library(qwraps2)
 # Creating working directory
 mainDir <- "D:/GG606_D1/Data/"
 rawDir <- "Raw data/US_pollution_2000_2016/"
+
 ####### CLEANING & CORRECTING ########
 # merging multiple csv files to one for cleaning the data  
 multmerge = function(path){
@@ -23,7 +24,8 @@ multmerge = function(path){
 
 # folder path where all the raw data exists
 path <- paste(mainDir,rawDir,sep = "",collapse = NULL)
-# Calling multimerge function and storing data in DF 
+
+# Calling multimerge function and storing data in DF (i.e. data frame)
 DF <- multmerge(path)
 
 # Summary of the data.frame
@@ -46,9 +48,11 @@ DF$Month_Yr <- format(as.Date(DF$Date), "%Y-%m")
 DF$Year <- format(as.Date(DF$Date),"%Y")
 
 str(DF)
-# taking mean to convert 4 rows into 1
+
+# taking mean to convert 4 rows into 1 i.e. taking aggregate of all observations to minimize the size of data and make it presentable on graph/ plots.
 Mean_DF <- aggregate(DF[, 10:29], list(DF$Month_Yr,DF$State,DF$Year), mean)
 str(DF)
+
 # Changing name of grouped Columns to Date and State. 
 Mean_DF <- Mean_DF %>% 
   rename(
