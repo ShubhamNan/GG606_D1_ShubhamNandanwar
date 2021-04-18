@@ -4,6 +4,8 @@
 # Course: GG-606-A - Scientific Data Wrangling
 #####################################
 
+install.packages("lubridate")
+
 # Importing libraries
 library(dplyr)
 library(readr)
@@ -17,7 +19,7 @@ library(lubridate)
 options(stringsAsFactors = FALSE)
 
 # Creating working directory
-mainDir <- "D:/GG606_D1/Data/"
+mainDir <- "D:/GG606/Data/"
 CleanDir <- "Clean_Data"
 ####### CLEANING & CORRECTING ########
 # merging multiple csv files to one for cleaning the data  
@@ -63,311 +65,71 @@ Mountain_df <- DF[DF$State %in% list_Mountain, ]
 Pacific_df <- DF[DF$State %in% list_Pacific, ]
 
 
-
-# Creating directory for NewEngland region in Results folder
-Results_NewEngland = "Results/NewEngland"
-dir.create(file.path(mainDir, Results_NewEngland), showWarnings = FALSE)
-
-# Multiple of all states line plot
-p<-ggplot(NewEngland_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
+######### Creating plot and tables for Middle Atlantic division and New England division ############
+# Line plot of all states in Middle Atlantic division
+p<-ggplot(MiddleAtlantic_df, aes(x = Year, y =`NO2 Mean (Parts per Million)`, group = State)) +
   geom_line(aes(color = State)) +
-  theme_minimal()
+  labs(title="NO2 Emission in MiddleAtlantic from 2013-2016",x="Year", y = "NO2 (Parts per Million)") +
+  theme_apa(
+    legend.pos = "right",
+    legend.use.title = FALSE,
+    legend.font.size = 12,
+    x.font.size = 12,
+    y.font.size = 12,
+    facet.title.size = 12,
+    remove.y.gridlines = TRUE,
+    remove.x.gridlines = TRUE
+  )
 ggsave(
-  paste(mainDir,Results_NewEngland,"/NewEngland_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
+  paste(mainDir,Plots_D3,"/MiddleAtlantic_NO2_main_plot.tiff",sep=""),
+  plot = p,device = "tiff")
+
+# Creating correlation table for NewEngland dataframe in APA style and exporting it as .doc file
+apa.cor.table(NewEngland_df,filename = "D:/GG606_D1/Data/Results/Tables_D3/Example1.doc",table.number = 1,show.conf.interval = F)
+
+# Creating a table of ANOVA using apa table and exporting in word
+apa.aov.table(lm(`NO2 Mean (Parts per Million)`~State,NewEngland_df),filename = "D:/GG606_D1/Data/Results/Tables_D3/Example4.doc",table.number = 1)
 
 
-p<-ggplot(NewEngland_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
+
+###### Creating Insights of only single state of USA: Alabama ######
+# Creating a DF for Alabama
+alabama_df <- read.csv(file = 'D:/GG606_D1/Data/Clean_Data_D3/Alabama.csv')
+# Taking aggregate of the whole year for each pollutant
+# creating subset of alabama based on year of pollution record
+alabama_agg = aggregate(alabama_df,
+                        by = list(alabama_df$Year),
+                        FUN = mean)
+# checking the aggregation result
+alabama_agg
+# Removing three extra columns from the DF
+alabama_agg_df = subset(alabama_agg, select = -c(Month_Yr,State,Group.1) )
+# checking the result
+alabama_agg_df
+
+
+# creating a APA style table for alamaba_df_2014 dataframe.
+alabama_df_2014 <- subset(alabama_df, Year == 2014)
+apa.cor.table(alabama_df_2014,filename = "D:/GG606_D1/Data/Results/Tables_D3/Example3.doc",table.number = 1,show.conf.interval = F)
+
+
+# Creating plots for NO2 in alabama
+p<-ggplot(data=alabama_agg_df, aes(x = Year, y =`NO2 Mean`, group = 1)) + 
+  geom_line(aes(color = 'NO2')) +
+  labs(title="NO2 Emission in Alabama from 2013-2016",x="Year", y = "NO2 (Parts per Million)") +
+  theme_apa(
+    legend.pos = "right",
+    legend.use.title = FALSE,
+    legend.font.size = 12,
+    x.font.size = 12,
+    y.font.size = 12,
+    facet.title.size = 12,
+    remove.y.gridlines = TRUE,
+    remove.x.gridlines = TRUE
+  )
+#Saving the ggplot
 ggsave(
-  paste(mainDir,Results_NewEngland,"/NewEngland_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
+  paste(mainDir,Plots_D3,"/NO2_alabama_2013-2016.tiff",sep=""),
+  plot = p,device = "tiff")
 
-p<-ggplot(NewEngland_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_NewEngland,"/NewEngland_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p<-ggplot(NewEngland_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_NewEngland,"/NewEngland_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-# Creating directory for MiddleAtlantic region in Results folder
-Results_MiddleAtlantic = "Results/MiddleAtlantic"
-dir.create(file.path(mainDir, Results_MiddleAtlantic), showWarnings = FALSE)
-
-# Multiple of all states line plot
-p <- ggplot(MiddleAtlantic_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_MiddleAtlantic,"/MiddleAtlantic_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(MiddleAtlantic_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_MiddleAtlantic,"/MiddleAtlantic_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(MiddleAtlantic_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_MiddleAtlantic,"/MiddleAtlantic_S02_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(MiddleAtlantic_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_MiddleAtlantic,"/MiddleAtlantic_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-# Creating directory for EastNorthCentral region in Results folder
-Results_EastNorthCentral = "Results/EastNorthCentral"
-dir.create(file.path(mainDir, Results_EastNorthCentral), showWarnings = FALSE)
-
-# Multiple of all states line plot
-p <- ggplot(EastNorthCentral_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastNorthCentral,"/EastNorthCentral_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(EastNorthCentral_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastNorthCentral,"/EastNorthCentral_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(EastNorthCentral_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastNorthCentral,"/EastNorthCentral_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(EastNorthCentral_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastNorthCentral,"/EastNorthCentral_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-# Creating directory for WestNorthCentral region in Results folder
-Results_WestNorthCentral = "Results/WestNorthCentral"
-dir.create(file.path(mainDir, Results_WestNorthCentral), showWarnings = FALSE)
-# Multiple of all states line plot
-p <- ggplot(WestNorthCentral_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestNorthCentral,"/WestNorthCentral_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(WestNorthCentral_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestNorthCentral,"/WestNorthCentral_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(WestNorthCentral_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestNorthCentral,"/WestNorthCentral_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(WestNorthCentral_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestNorthCentral,"/WestNorthCentral_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-# Creating directory for SouthAtlantic region in Results folder
-Results_SouthAtlantic = "Results/SouthAtlantic"
-dir.create(file.path(mainDir, Results_SouthAtlantic), showWarnings = FALSE)
-# Multiple of all states line plot
-p <- ggplot(SouthAtlantic_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_SouthAtlantic,"/SouthAtlantic_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(SouthAtlantic_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_SouthAtlantic,"/SouthAtlantic_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(SouthAtlantic_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_SouthAtlantic,"/SouthAtlantic_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(SouthAtlantic_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_SouthAtlantic,"/SouthAtlantic_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-# Creating directory for EastSouthCentral region in Results folder
-Results_EastSouthCentral = "Results/EastSouthCentral"
-dir.create(file.path(mainDir, Results_EastSouthCentral), showWarnings = FALSE)
-# Multiple of all states line plot
-p <- ggplot(EastSouthCentral_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastSouthCentral,"/EastSouthCentral_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(EastSouthCentral_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastSouthCentral,"/EastSouthCentral_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(EastSouthCentral_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastSouthCentral,"/EastSouthCentral_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(EastSouthCentral_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_EastSouthCentral,"/EastSouthCentral_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-# Creating directory for WestSouthCentral region in Results folder
-Results_WestSouthCentral = "Results/WestSouthCentral"
-dir.create(file.path(mainDir, Results_WestSouthCentral), showWarnings = FALSE)
-# Multiple of all states line plot
-p <- ggplot(WestSouthCentral_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestSouthCentral,"/WestSouthCentral_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(WestSouthCentral_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestSouthCentral,"/WestSouthCentral_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(WestSouthCentral_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestSouthCentral,"/WestSouthCentral_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(WestSouthCentral_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_WestSouthCentral,"/WestSouthCentral_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-# Creating directory for Mountain region in Results folder
-Results_Mountain = "Results/Mountain"
-dir.create(file.path(mainDir, Results_Mountain), showWarnings = FALSE)
-# Multiple of all states line plot
-p <- ggplot(Mountain_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Mountain,"/Mountain_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(Mountain_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Mountain,"/Mountain_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(Mountain_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Mountain,"/Mountain_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(Mountain_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Mountain,"/Mountain_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-
-
-# Creating directory for Pacific region in Results folder 
-Results_Pacific = "Results/Pacific"
-dir.create(file.path(mainDir, Results_Pacific), showWarnings = FALSE)
-# Multiple of all states line plot
-p <- ggplot(Pacific_df, aes(x = Month_Yr, y =`NO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Pacific,"/Pacific_NO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(Pacific_df, aes(x = Month_Yr, y =`O3 Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Pacific,"/Pacific_O3_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(Pacific_df, aes(x = Month_Yr, y =`SO2 Mean (Parts per Million)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Pacific,"/Pacific_SO2_main_plot.png",sep=""),
-  plot = p,device = "png")
-
-p <- ggplot(Pacific_df, aes(x = Month_Yr, y =`CO Mean (Parts per Billion)`, group = 1)) + 
-  geom_line(aes(color = State)) +
-  theme_minimal()
-ggsave(
-  paste(mainDir,Results_Pacific,"/Pacific_CO_main_plot.png",sep=""),
-  plot = p,device = "png")
 

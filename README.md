@@ -1,7 +1,7 @@
 # GG606_D1_ShubhamNandanwar
 <br />
 ---------------------------------------------------------------------------------<br />
-This is an assignment-1 submission for 'GG-606-A - Scientific Data Wrangling'.<br />
+This is an assignment-3 submission for 'GG-606-A - Scientific Data Wrangling'.<br />
 by Shubham Nandanwar<br />
 ---------------------------------------------------------------------------------<br />
 
@@ -35,16 +35,13 @@ Separate plots were made for each pollutant per U.S. division for whole 2000-201
 <br />
 <br />
 ***********Logic behind this repository structure***********<br />
-The parent folder “GG606_D1’ is named after the course and assignment it serves for. This folder contains a R workspace file, a ReadMe file and a Rhistory file along with three subfolders called Data, Docs and Scripts. <br />
-The Data folder contains all the data and is further divided into three folders: ‘Raw data’, ‘Clean_Data’ and ‘Results’. The ‘Raw data’ folder contains the ‘US pollution’ raw data which was downloaded from an open data source website: ‘https://www.kaggle.com/sogun3/uspollution’. The ‘Clean_Data’ folder contains the cleaned csv files of all states of U.S. The ‘Results’ folder is further divided into subfolders based on the plots I have made and are named after the regional divisions of the U.S. Those folders contain plots of each pollutant for 2000-2016 timeframe. There is one additional folder called ‘All_States’ which contains area plots and bar plot demonstrating pollution due to C0, NO2, SO2 and O3 in all states/ provinces of U.S.<br /> 
+The parent folder “GG606’ is named after the course. This folder contains a R workspace file, a ReadMe file and a Rhistory file along with three subfolders called Data, Docs and Scripts. <br />
+The Data folder contains all the data and is further divided into three folders: ‘Raw data’, ‘Clean_Data’ and ‘Results’. The ‘Raw data’ folder contains the ‘US pollution’ raw data which was downloaded from an open data source website: ‘https://www.kaggle.com/sogun3/uspollution’. The ‘Clean_Data’ folder contains the cleaned csv files of all states of U.S. The ‘Results’ folder is further divided into subfolders based on the result type i.e. plots and tables. <br /> 
 The ‘Docs’ folder contains metadata. <br />
-The ‘Scripts’ folder contains R files which were used to clean, process and analyse the data. This folder contains three R scripts named as: ‘data_merging_cleaning’, ‘All_State_Insights’ and ‘State_creating_insights’. The ‘data_merging_cleaning’ contains codes for cleaning/tidying the U.S. pollution dataset and generating and saving the cleaned data. The ‘All_State_Insights’ contains the codes used to generate plots of the U.S. dataset with all states in single graph/plot. After plotting them together, I realised that the plot looked too busy, thereby I wrote another script named ‘State_creating_insights’ in which I drew separate plots for each pollutant per U.S. division for whole 2000-2016 timeframe.<br />
+The ‘Scripts’ folder contains R files which were used to clean, process and analyse the data. This folder contains three R scripts named as: ‘data_merging_cleaning’, ‘All_State_Insights’ and ‘State_creating_insights’. The ‘data_merging_cleaning’ contains codes for cleaning/tidying the U.S. pollution dataset and generating and saving the cleaned data. The ‘All_State_Insights’ contains the codes used to generate plots of the U.S. dataset with all states in single graph/plot. After plotting them together, I realised that the plot looked too busy, thereby I wrote another script named ‘State_creating_insights’ in which I drew separate plots per pollutant for Middle Atlantic and New England division for whole 2000-2016 timeframe.<br />
 The order to run the scripts is as follows: <br />
 data_merging_cleaning > All_State_Insights > State_creating_insights<br />
 <br />
 <br />
-***********Obtaining template of this repository***********<br />
-To get the template of this repository, kindly access the GitHub repository by using the link: ‘https://github.com/ShubhamNan/GG606_D1_ShubhamNandanwar’ and click ‘Use this template’ option marked in green colour. This will allow the user to generate repository with similar folders and divisions. <br />
-Or<br />
-The user can also obtain this repository by adding ‘/generate’ at the end of the link and run it in any browser.<br />
+
 
