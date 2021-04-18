@@ -1,4 +1,4 @@
-# GG606_D1_ShubhamNandanwar
+# GG606_D3_ShubhamNandanwar
 <br />
 ---------------------------------------------------------------------------------<br />
 This is an assignment-3 submission for 'GG-606-A - Scientific Data Wrangling'.<br />
